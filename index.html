@@ -377,9 +377,13 @@ function sendInventory(){
     return;
   }
 
-  const dateStr = new Date().toLocaleDateString("fr-FR");
-  const subject = encodeURIComponent(`Inventaire du ${dateStr}`);
-  const body = encodeURIComponent(lines.join("\n"));
+  const dateStr = new Date().toLocaleDateString("fr-FR", {weekday:"long", day:"numeric", month:"long", year:"numeric"});
+  const subject = encodeURIComponent(`Inventaire du ${new Date().toLocaleDateString("fr-FR")}`);
+
+  const header = `Bonjour,\n\nVeuillez trouver ci-dessous l'inventaire réalisé ce ${dateStr}.\n\n${"─".repeat(32)}\n\n`;
+  const footer = `\n${"─".repeat(32)}\n\nBonne soirée à toute l'équipe 🥐\nBoulangeries Joseph`;
+
+  const body = encodeURIComponent(header + lines.join("\n") + footer);
   window.location.href = `mailto:${EMAIL_TO}?subject=${subject}&body=${body}`;
 }
 </script>
