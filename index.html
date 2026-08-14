@@ -335,56 +335,106 @@ document.getElementById("today").textContent =
   new Date().toLocaleDateString("fr-FR", {weekday:"long", day:"numeric", month:"long", year:"numeric"});
 
 // ---------- Envoi par mail ----------
-function sendInventory(){
-  const lines = [];
+function buildTable(title, rows){
+  if(!rows.length) return "";
+  let html = `<h3 style="margin:20px 0 8px;font-family:Arial,sans-serif;color:#5C3A1B;border-bottom:2px solid #8A5A2B;padding-bottom:4px">${title}</h3>`;
+  html += `<table style="border-collapse:collapse;width:100%;font-family:Arial,sans-serif;font-size:14px;margin-bottom:16px">`;
+  html += `<thead><tr style="background:#8A5A2B;color:white">`;
+  rows[0].headers.forEach(h=>{
+    html += `<th style="padding:8px 12px;text-align:left;border:1px solid #ccc">${h}</th>`;
+  });
+  html += `</tr></thead><tbody>`;
+  rows.forEach((r,i)=>{
+    const bg = i%2===0?"#F7F1E8":"#ffffff";
+    html += `<tr style="background:${bg}">`;
+    r.cells.forEach(c=>{
+      html += `<td style="padding:8px 12px;border:1px solid #ddd">${c}</td>`;
+    });
+    html += `</tr>`;
+  });
+  html += `</tbody></table>`;
+  return html;
+}
 
+function sendInventory(){
+  const dateStr = new Date().toLocaleDateString("fr-FR",{weekday:"long",day:"numeric",month:"long",year:"numeric"});
+  const dateShort = new Date().toLocaleDateString("fr-FR");
+  let hasData = false;
+
+  // Macarons & Chocolats
+  let tablesHtml = "";
   ["macarons","chocolats"].forEach(cat=>{
     const inputs = document.querySelectorAll(`input[data-cat="${cat}"]`);
-    const entries = [];
+    const rows = [];
     inputs.forEach(inp=>{
       const v = parseInt(inp.value,10);
-      if(v && v>0){ entries.push(`${inp.dataset.name} : ${v}`); }
+      if(v && v>0){
+        rows.push({
+          headers:["Parfum","Quantité"],
+          cells:[inp.dataset.name, v]
+        });
+      }
     });
-    if(entries.length){
-      lines.push(cat.charAt(0).toUpperCase()+cat.slice(1));
-      lines.push(...entries.map(e=>"- "+e));
-      lines.push("");
+    if(rows.length){
+      hasData = true;
+      tablesHtml += buildTable(cat.charAt(0).toUpperCase()+cat.slice(1), rows);
     }
   });
 
-  // Pâtisserie : regrouper par gâteau
+  // Pâtisserie
   const cakeInputs = document.querySelectorAll(`input[data-cat="patisserie"]`);
   const cakeMap = {};
   cakeInputs.forEach(inp=>{
     const v = parseInt(inp.value,10);
     if(v && v>0){
       const n = inp.dataset.name;
-      if(!cakeMap[n]) cakeMap[n]=[];
-      cakeMap[n].push(`${FORMAT_LABELS[inp.dataset.fmt]} : ${v}`);
+      if(!cakeMap[n]) cakeMap[n]={};
+      cakeMap[n][inp.dataset.fmt] = v;
     }
   });
   const cakeNames = Object.keys(cakeMap);
   if(cakeNames.length){
-    lines.push("Patisserie");
-    cakeNames.forEach(n=>{
-      lines.push(`- ${n} — ${cakeMap[n].join(", ")}`);
+    hasData = true;
+    let html = `<h3 style="margin:20px 0 8px;font-family:Arial,sans-serif;color:#5C3A1B;border-bottom:2px solid #8A5A2B;padding-bottom:4px">Pâtisserie</h3>`;
+    html += `<table style="border-collapse:collapse;width:100%;font-family:Arial,sans-serif;font-size:14px;margin-bottom:16px">`;
+    html += `<thead><tr style="background:#8A5A2B;color:white">`;
+    html += `<th style="padding:8px 12px;text-align:left;border:1px solid #ccc">Produit</th>`;
+    FORMATS.forEach(f=>{
+      html += `<th style="padding:8px 12px;text-align:center;border:1px solid #ccc">${FORMAT_LABELS[f]}</th>`;
     });
-    lines.push("");
+    html += `</tr></thead><tbody>`;
+    cakeNames.forEach((n,i)=>{
+      const bg = i%2===0?"#F7F1E8":"#ffffff";
+      html += `<tr style="background:${bg}">`;
+      html += `<td style="padding:8px 12px;border:1px solid #ddd;font-weight:600">${n}</td>`;
+      FORMATS.forEach(f=>{
+        const v = cakeMap[n][f] || "";
+        html += `<td style="padding:8px 12px;text-align:center;border:1px solid #ddd">${v}</td>`;
+      });
+      html += `</tr>`;
+    });
+    html += `</tbody></table>`;
+    tablesHtml += html;
   }
 
-  if(lines.length===0){
+  if(!hasData){
     alert("Aucune quantité saisie pour le moment.");
     return;
   }
 
-  const dateStr = new Date().toLocaleDateString("fr-FR", {weekday:"long", day:"numeric", month:"long", year:"numeric"});
-  const subject = encodeURIComponent(`Inventaire du ${new Date().toLocaleDateString("fr-FR")}`);
+  const fullHtml = `
+    <div style="font-family:Arial,sans-serif;max-width:700px;margin:0 auto">
+      <p style="color:#2B2320">Bonjour,</p>
+      <p style="color:#2B2320">Veuillez trouver ci-dessous l'inventaire réalisé ce <strong>${dateStr}</strong>.</p>
+      ${tablesHtml}
+      <p style="color:#2B2320;margin-top:24px">Bonne soirée à toute l'équipe 🥐<br><strong>Boulangeries Joseph</strong></p>
+    </div>
+  `;
 
-  const header = `Bonjour,\n\nVeuillez trouver ci-dessous l'inventaire réalisé ce ${dateStr}.\n\n${"─".repeat(32)}\n\n`;
-  const footer = `\n${"─".repeat(32)}\n\nBonne soirée à toute l'équipe 🥐\nBoulangeries Joseph`;
-
-  const body = encodeURIComponent(header + lines.join("\n") + footer);
-  window.location.href = `mailto:${EMAIL_TO}?subject=${subject}&body=${body}`;
+  // Ouvrir Gmail avec le contenu HTML
+  const subject = encodeURIComponent(`Inventaire du ${dateShort}`);
+  const body = encodeURIComponent(fullHtml);
+  window.open(`https://mail.google.com/mail/?view=cm&to=${encodeURIComponent(EMAIL_TO)}&su=${subject}&body=${body}&tf=1`,"_blank");
 }
 </script>
 </body>
