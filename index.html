@@ -260,6 +260,7 @@ const FORMATS = ["indiv","4p","6p","8p","10p","12p"];
 const FORMAT_LABELS = {indiv:"Individuel","4p":"4 parts","6p":"6 parts","8p":"8 parts","10p":"10 parts","12p":"12 parts"};
 
 const EMAIL_TO = "commandes.duchesse@gmail.com";
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzpYVzKn-CKes9RWJ0OZdErxE6Si3hbaRtXVUPXW6IUseGDmvBdmogV5dCBl5MYRnW2Ug/exec";
 
 // ---------- Rendu ----------
 function renderSimple(cat){
@@ -356,29 +357,24 @@ function buildTable(title, rows){
   return html;
 }
 
-function sendInventory(){
-  const dateStr = new Date().toLocaleDateString("fr-FR",{weekday:"long",day:"numeric",month:"long",year:"numeric"});
-  const dateShort = new Date().toLocaleDateString("fr-FR");
+async function sendInventory(){
+  const btn = document.querySelector(".send-btn");
+  btn.textContent = "Envoi en cours...";
+  btn.disabled = true;
+
+  const payload = { macarons: [], patisserie: [], chocolats: [] };
   let hasData = false;
 
   // Macarons & Chocolats
-  let tablesHtml = "";
   ["macarons","chocolats"].forEach(cat=>{
     const inputs = document.querySelectorAll(`input[data-cat="${cat}"]`);
-    const rows = [];
     inputs.forEach(inp=>{
       const v = parseInt(inp.value,10);
       if(v && v>0){
-        rows.push({
-          headers:["Parfum","Quantité"],
-          cells:[inp.dataset.name, v]
-        });
+        hasData = true;
+        payload[cat].push({nom: inp.dataset.name, quantite: v});
       }
     });
-    if(rows.length){
-      hasData = true;
-      tablesHtml += buildTable(cat.charAt(0).toUpperCase()+cat.slice(1), rows);
-    }
   });
 
   // Pâtisserie
@@ -387,54 +383,45 @@ function sendInventory(){
   cakeInputs.forEach(inp=>{
     const v = parseInt(inp.value,10);
     if(v && v>0){
+      hasData = true;
       const n = inp.dataset.name;
-      if(!cakeMap[n]) cakeMap[n]={};
+      if(!cakeMap[n]) cakeMap[n]={nom:n};
       cakeMap[n][inp.dataset.fmt] = v;
     }
   });
-  const cakeNames = Object.keys(cakeMap);
-  if(cakeNames.length){
-    hasData = true;
-    let html = `<h3 style="margin:20px 0 8px;font-family:Arial,sans-serif;color:#5C3A1B;border-bottom:2px solid #8A5A2B;padding-bottom:4px">Pâtisserie</h3>`;
-    html += `<table style="border-collapse:collapse;width:100%;font-family:Arial,sans-serif;font-size:14px;margin-bottom:16px">`;
-    html += `<thead><tr style="background:#8A5A2B;color:white">`;
-    html += `<th style="padding:8px 12px;text-align:left;border:1px solid #ccc">Produit</th>`;
-    FORMATS.forEach(f=>{
-      html += `<th style="padding:8px 12px;text-align:center;border:1px solid #ccc">${FORMAT_LABELS[f]}</th>`;
-    });
-    html += `</tr></thead><tbody>`;
-    cakeNames.forEach((n,i)=>{
-      const bg = i%2===0?"#F7F1E8":"#ffffff";
-      html += `<tr style="background:${bg}">`;
-      html += `<td style="padding:8px 12px;border:1px solid #ddd;font-weight:600">${n}</td>`;
-      FORMATS.forEach(f=>{
-        const v = cakeMap[n][f] || "";
-        html += `<td style="padding:8px 12px;text-align:center;border:1px solid #ddd">${v}</td>`;
-      });
-      html += `</tr>`;
-    });
-    html += `</tbody></table>`;
-    tablesHtml += html;
-  }
+  payload.patisserie = Object.values(cakeMap);
 
   if(!hasData){
     alert("Aucune quantité saisie pour le moment.");
+    btn.textContent = "Envoyer l'inventaire par mail";
+    btn.disabled = false;
     return;
   }
 
-  const fullHtml = `
-    <div style="font-family:Arial,sans-serif;max-width:700px;margin:0 auto">
-      <p style="color:#2B2320">Bonjour,</p>
-      <p style="color:#2B2320">Veuillez trouver ci-dessous l'inventaire réalisé ce <strong>${dateStr}</strong>.</p>
-      ${tablesHtml}
-      <p style="color:#2B2320;margin-top:24px">Bonne soirée à toute l'équipe 🥐<br><strong>Boulangeries Joseph</strong></p>
-    </div>
-  `;
-
-  // Ouvrir Gmail avec le contenu HTML
-  const subject = encodeURIComponent(`Inventaire du ${dateShort}`);
-  const body = encodeURIComponent(fullHtml);
-  window.open(`https://mail.google.com/mail/?view=cm&to=${encodeURIComponent(EMAIL_TO)}&su=${subject}&body=${body}&tf=1`,"_blank");
+  // Envoyer vers Google Sheets
+  try {
+    await fetch(SCRIPT_URL, {
+      method: "POST",
+      mode: "no-cors",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify(payload)
+    });
+    // Attendre 1 seconde que le script traite
+    await new Promise(r => setTimeout(r, 1000));
+    btn.textContent = "✅ Inventaire envoyé !";
+    btn.style.background = "#2A7A3B";
+    // Remettre à zéro après 3 secondes
+    setTimeout(()=>{
+      document.querySelectorAll("input[type=number]").forEach(i=>i.value="");
+      btn.textContent = "Envoyer l'inventaire par mail";
+      btn.style.background = "";
+      btn.disabled = false;
+    }, 3000);
+  } catch(e) {
+    alert("Erreur d'envoi. Vérifie ta connexion.");
+    btn.textContent = "Envoyer l'inventaire par mail";
+    btn.disabled = false;
+  }
 }
 </script>
 </body>
