@@ -404,6 +404,7 @@ async function sendInventory(){
   }
 
   const emailDest = document.getElementById("email-dest").value || "commandes.duchesse@gmail.com";
+  payload.emailTo = emailDest;
   const dateStr = new Date().toLocaleDateString("fr-FR",{weekday:"long",day:"numeric",month:"long",year:"numeric"});
   const dateShort = new Date().toLocaleDateString("fr-FR");
   const sheetsUrl = "https://docs.google.com/spreadsheets/d/13Vz3bF-0hcdY0tWXKB1vjYBNA9nLP5uAw_T5DdJW2Sk/edit";
