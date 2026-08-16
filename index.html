@@ -11,8 +11,8 @@
     --crust:#3A5A8A;
     --crust-dark:#1E3A5F;
     --ink:#1A2B3C;
-    --raspberry:#2E6DA4;
-    --raspberry-dark:#1A4A7A;
+    --blue:#2E6DA4;
+    --blue-dark:#1A4A7A;
     --line:#C5D4E8;
     --white:#FFFFFF;
   }
@@ -20,183 +20,102 @@
   html,body{margin:0;padding:0;background:var(--cream);color:var(--ink);
     font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
     -webkit-font-smoothing:antialiased;}
-  body{padding-bottom:120px;}
+  body{padding-bottom:130px;}
 
   header{
-    padding:22px 20px 16px;
+    padding:20px 16px 14px;
     background:var(--crust);
-    color:var(--cream);
+    color:var(--white);
     position:sticky;top:0;z-index:10;
-    box-shadow:0 2px 8px rgba(0,0,0,0.12);
+    box-shadow:0 2px 8px rgba(0,0,0,0.15);
   }
-  header h1{
-    margin:0;
-    font-size:22px;
-    letter-spacing:0.3px;
-    font-weight:700;
-  }
-  header .date{
-    margin-top:2px;
-    font-size:13px;
-    color:var(--wheat);
-    opacity:0.9;
-  }
+  header h1{margin:0;font-size:20px;font-weight:700;}
+  header .date{margin-top:2px;font-size:13px;opacity:0.8;}
 
   nav{
-    display:flex;
-    gap:8px;
-    padding:14px 16px 0;
+    display:flex;gap:6px;
+    padding:12px 12px 0;
     background:var(--crust);
   }
   nav button{
-    flex:1;
-    padding:12px 6px;
-    border:none;
-    border-radius:12px 12px 0 0;
-    font-size:15px;
-    font-weight:600;
-    background:rgba(255,255,255,0.12);
-    color:var(--wheat);
-    transition:background .15s;
+    flex:1;padding:11px 4px;
+    border:none;border-radius:10px 10px 0 0;
+    font-size:14px;font-weight:600;
+    background:rgba(255,255,255,0.15);
+    color:rgba(255,255,255,0.8);
   }
-  nav button.active{
-    background:var(--cream);
-    color:var(--crust-dark);
-  }
+  nav button.active{background:var(--cream);color:var(--crust-dark);}
 
-  main{padding:18px 16px 0;}
-
+  main{padding:14px 12px 0;}
   .category{display:none;}
   .category.active{display:block;}
 
   .row{
     background:var(--white);
     border:1px solid var(--line);
-    border-radius:14px;
-    padding:14px 16px;
-    margin-bottom:10px;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:12px;
+    border-radius:12px;
+    padding:12px 14px;
+    margin-bottom:8px;
+    display:flex;align-items:center;justify-content:space-between;gap:10px;
   }
-  .row .name{
-    font-size:17px;
-    font-weight:600;
-    flex:1;
-  }
+  .row .name{font-size:16px;font-weight:600;flex:1;}
   .row input[type=number]{
-    width:78px;
-    font-size:22px;
-    font-weight:700;
-    text-align:center;
-    padding:10px 4px;
-    border:2px solid var(--line);
-    border-radius:10px;
-    background:var(--cream);
-    color:var(--ink);
+    width:76px;font-size:22px;font-weight:700;text-align:center;
+    padding:9px 4px;border:2px solid var(--line);border-radius:10px;
+    background:var(--cream);color:var(--ink);
   }
-  .row input[type=number]:focus{
-    outline:none;
-    border-color:var(--raspberry);
-  }
+  .row input[type=number]:focus{outline:none;border-color:var(--blue);}
 
-  /* Pâtisserie : produit dépliable avec 6 formats */
   .cake{
-    background:var(--white);
-    border:1px solid var(--line);
-    border-radius:14px;
-    margin-bottom:10px;
-    overflow:hidden;
+    background:var(--white);border:1px solid var(--line);
+    border-radius:12px;margin-bottom:8px;overflow:hidden;
   }
   .cake summary{
-    list-style:none;
-    padding:14px 16px;
-    font-size:17px;
-    font-weight:600;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    cursor:pointer;
+    list-style:none;padding:13px 14px;
+    font-size:16px;font-weight:600;
+    display:flex;justify-content:space-between;align-items:center;cursor:pointer;
   }
   .cake summary::-webkit-details-marker{display:none;}
-  .cake summary .chevron{
-    color:var(--crust);
-    font-size:14px;
-    transition:transform .15s;
-  }
-  .cake[open] summary .chevron{transform:rotate(90deg);}
-  .cake summary .badge{
-    font-size:12px;
-    font-weight:700;
-    color:var(--raspberry);
-    margin-left:8px;
-  }
+  .cake summary .chev{color:var(--crust);font-size:13px;transition:transform .15s;}
+  .cake[open] summary .chev{transform:rotate(90deg);}
   .formats{
-    padding:4px 16px 14px;
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:10px;
+    padding:4px 14px 12px;
+    display:grid;grid-template-columns:1fr 1fr;gap:8px;
   }
-  .fmt{
-    background:var(--cream);
-    border-radius:10px;
-    padding:8px 10px;
-    display:flex;
-    flex-direction:column;
-    gap:4px;
-  }
-  .fmt label{font-size:12px;color:var(--crust-dark);font-weight:600;}
+  .fmt{background:var(--cream);border-radius:8px;padding:7px 8px;display:flex;flex-direction:column;gap:3px;}
+  .fmt label{font-size:11px;color:var(--crust-dark);font-weight:600;}
   .fmt input{
-    width:100%;
-    font-size:19px;
-    font-weight:700;
-    text-align:center;
-    padding:8px 2px;
-    border:2px solid var(--line);
-    border-radius:8px;
-    background:var(--white);
+    width:100%;font-size:18px;font-weight:700;text-align:center;
+    padding:7px 2px;border:2px solid var(--line);border-radius:7px;background:var(--white);
   }
-  .fmt input:focus{outline:none;border-color:var(--raspberry);}
+  .fmt input:focus{outline:none;border-color:var(--blue);}
 
-  .add-row{
-    display:block;
-    width:100%;
-    padding:14px;
-    margin:6px 0 20px;
-    border:2px dashed var(--line);
-    border-radius:14px;
-    background:transparent;
-    color:var(--crust-dark);
-    font-size:15px;
-    font-weight:600;
+  .add-btn{
+    display:block;width:100%;padding:13px;margin:4px 0 18px;
+    border:2px dashed var(--line);border-radius:12px;
+    background:transparent;color:var(--crust-dark);font-size:14px;font-weight:600;
   }
 
   footer{
-    position:fixed;
-    left:0;right:0;bottom:0;
-    padding:14px 16px calc(14px + env(safe-area-inset-bottom));
-    background:linear-gradient(0deg, var(--cream) 60%, rgba(247,241,232,0));
+    position:fixed;left:0;right:0;bottom:0;
+    padding:12px 14px calc(12px + env(safe-area-inset-bottom));
+    background:linear-gradient(0deg,var(--cream) 60%,rgba(245,247,250,0));
+  }
+  .email-row{
+    display:flex;align-items:center;gap:8px;margin-bottom:8px;
+  }
+  .email-row label{font-size:13px;color:var(--crust-dark);font-weight:600;white-space:nowrap;}
+  .email-row input{
+    flex:1;padding:9px 11px;border:2px solid var(--line);border-radius:9px;
+    font-size:13px;background:var(--white);color:var(--ink);
   }
   .send-btn{
-    width:100%;
-    padding:16px;
-    border:none;
-    border-radius:14px;
-    background:var(--raspberry);
-    color:#fff;
-    font-size:17px;
-    font-weight:700;
-    box-shadow:0 4px 14px rgba(178,58,72,0.35);
+    width:100%;padding:15px;border:none;border-radius:12px;
+    background:var(--blue);color:#fff;font-size:17px;font-weight:700;
+    box-shadow:0 4px 14px rgba(46,109,164,0.35);
   }
-  .send-btn:active{background:var(--raspberry-dark);}
-
-  .hint{
-    text-align:center;
-    font-size:12px;
-    color:#8a7a63;
-    margin:4px 0 8px;
-  }
+  .send-btn:active{background:var(--blue-dark);}
+  .hint{text-align:center;font-size:12px;color:#7a8fa6;margin:3px 0 6px;}
 </style>
 </head>
 <body>
@@ -213,106 +132,67 @@
 </nav>
 
 <main>
-
-  <!-- MACARONS -->
   <section class="category active" id="macarons">
-    <div class="list" id="list-macarons"></div>
-    <button class="add-row" onclick="addSimpleProduct('macarons')">+ Ajouter un produit</button>
+    <div id="list-macarons"></div>
+    <button class="add-btn" onclick="addSimple('macarons')">+ Ajouter un produit</button>
   </section>
-
-  <!-- PATISSERIE -->
   <section class="category" id="patisserie">
-    <div class="hint">Touchez un gâteau pour saisir les formats concernés</div>
-    <div class="list" id="list-patisserie"></div>
-    <button class="add-row" onclick="addCakeProduct()">+ Ajouter un produit</button>
+    <div class="hint">Touchez un gâteau pour saisir les formats</div>
+    <div id="list-patisserie"></div>
+    <button class="add-btn" onclick="addCake()">+ Ajouter un produit</button>
   </section>
-
-  <!-- CHOCOLATS -->
   <section class="category" id="chocolats">
-    <div class="list" id="list-chocolats"></div>
-    <button class="add-row" onclick="addSimpleProduct('chocolats')">+ Ajouter un produit</button>
+    <div id="list-chocolats"></div>
+    <button class="add-btn" onclick="addSimple('chocolats')">+ Ajouter un produit</button>
   </section>
-
 </main>
 
 <footer>
-  <div style="margin-bottom:10px;display:flex;align-items:center;gap:8px;">
-    <label style="font-size:13px;color:#5C3A1B;font-weight:600;white-space:nowrap;">Envoyer à :</label>
-    <input type="email" id="email-dest" value="commandes.duchesse@gmail.com"
-      style="flex:1;padding:10px 12px;border:2px solid #DCCBA8;border-radius:10px;font-size:14px;background:#fff;color:#2B2320;">
+  <div class="email-row">
+    <label>Envoyer à :</label>
+    <input type="email" id="email-dest" value="commandes.duchesse@gmail.com">
   </div>
-  <button class="send-btn" onclick="sendInventory()">Envoyer l'inventaire par mail</button>
+  <button class="send-btn" id="send-btn" onclick="sendInventory()">Envoyer l'inventaire par mail</button>
 </footer>
 
 <script>
-// ---------- Données produits (modifiables ici) ----------
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzpYVzKn-CKes9RWJ0OZdErxE6Si3hbaRtXVUPXW6IUseGDmvBdmogV5dCBl5MYRnW2Ug/exec";
+
 const DATA = {
-  macarons: [
-    "Chocolat","Café","Caramel","Vanille","Pistache","Plantagenet",
-    "Framboise","Fraise","Citron","Fruit des bois","Absinthe",
-    "Champigny","Réglisse","Pomme Tatin"
-  ],
-  chocolats: [
-    // à compléter — utilisez "+ Ajouter un produit" ou demandez la mise à jour du fichier
-  ],
-  patisserie: [
-    "Concerto","Caramélia","3 Chocolat","Echiquier","Sultan",
-    "Carmin","Tarte exotique","Tarte citron","Armoricain",
-    "Pavé pistache","Eclair café","Eclair chocolat"
-  ]
+  macarons: ["Chocolat","Café","Caramel","Vanille","Pistache","Plantagenet","Framboise","Fraise","Citron","Fruit des bois","Absinthe","Champigny","Réglisse","Pomme Tatin"],
+  chocolats: [],
+  patisserie: ["Concerto","Caramélia","3 Chocolat","Echiquier","Sultan","Carmin","Tarte exotique","Tarte citron","Armoricain","Pavé pistache","Eclair café","Eclair chocolat"]
 };
 const FORMATS = ["indiv","4p","6p","8p","10p","12p"];
 const FORMAT_LABELS = {indiv:"Individuel","4p":"4 parts","6p":"6 parts","8p":"8 parts","10p":"10 parts","12p":"12 parts"};
 
-const EMAIL_TO = "commandes.duchesse@gmail.com";
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzpYVzKn-CKes9RWJ0OZdErxE6Si3hbaRtXVUPXW6IUseGDmvBdmogV5dCBl5MYRnW2Ug/exec";
-
-// ---------- Rendu ----------
 function renderSimple(cat){
-  const container = document.getElementById("list-" + cat);
-  container.innerHTML = "";
-  DATA[cat].forEach((name, i) => {
-    const row = document.createElement("div");
-    row.className = "row";
-    row.innerHTML = `
-      <div class="name">${name}</div>
-      <input type="number" inputmode="numeric" min="0" placeholder="0" data-cat="${cat}" data-name="${name}">
-    `;
-    container.appendChild(row);
+  const c = document.getElementById("list-"+cat);
+  c.innerHTML = "";
+  DATA[cat].forEach(name=>{
+    const d = document.createElement("div");
+    d.className = "row";
+    d.innerHTML = `<div class="name">${name}</div><input type="number" inputmode="numeric" min="0" placeholder="0" data-cat="${cat}" data-name="${name}">`;
+    c.appendChild(d);
   });
 }
 
 function renderPatisserie(){
-  const container = document.getElementById("list-patisserie");
-  container.innerHTML = "";
-  DATA.patisserie.forEach(name => {
+  const c = document.getElementById("list-patisserie");
+  c.innerHTML = "";
+  DATA.patisserie.forEach(name=>{
     const det = document.createElement("details");
     det.className = "cake";
-    const fmtInputs = FORMATS.map(f => `
-      <div class="fmt">
-        <label>${FORMAT_LABELS[f]}</label>
-        <input type="number" inputmode="numeric" min="0" placeholder="0"
-               data-cat="patisserie" data-name="${name}" data-fmt="${f}">
-      </div>
-    `).join("");
-    det.innerHTML = `
-      <summary>${name} <span class="chevron">▶</span></summary>
-      <div class="formats">${fmtInputs}</div>
-    `;
-    container.appendChild(det);
+    det.innerHTML = `<summary>${name} <span class="chev">▶</span></summary><div class="formats">${FORMATS.map(f=>`<div class="fmt"><label>${FORMAT_LABELS[f]}</label><input type="number" inputmode="numeric" min="0" placeholder="0" data-cat="patisserie" data-name="${name}" data-fmt="${f}"></div>`).join("")}</div>`;
+    c.appendChild(det);
   });
 }
 
-function renderAll(){
-  renderSimple("macarons");
-  renderSimple("chocolats");
-  renderPatisserie();
-}
+function renderAll(){ renderSimple("macarons"); renderSimple("chocolats"); renderPatisserie(); }
 renderAll();
 
-// ---------- Onglets ----------
 document.querySelectorAll(".tab").forEach(btn=>{
-  btn.addEventListener("click", ()=>{
+  btn.addEventListener("click",()=>{
     document.querySelectorAll(".tab").forEach(b=>b.classList.remove("active"));
     document.querySelectorAll(".category").forEach(c=>c.classList.remove("active"));
     btn.classList.add("active");
@@ -320,116 +200,43 @@ document.querySelectorAll(".tab").forEach(btn=>{
   });
 });
 
-// ---------- Ajout de produit (session en cours) ----------
-function addSimpleProduct(cat){
-  const name = prompt("Nom du nouveau produit :");
-  if(name && name.trim()){
-    DATA[cat].push(name.trim());
-    renderSimple(cat);
-  }
-}
-function addCakeProduct(){
-  const name = prompt("Nom du nouveau gâteau :");
-  if(name && name.trim()){
-    DATA.patisserie.push(name.trim());
-    renderPatisserie();
-  }
-}
+function addSimple(cat){ const n=prompt("Nom du produit :"); if(n&&n.trim()){DATA[cat].push(n.trim());renderSimple(cat);} }
+function addCake(){ const n=prompt("Nom du gâteau :"); if(n&&n.trim()){DATA.patisserie.push(n.trim());renderPatisserie();} }
 
-// ---------- Date du jour ----------
-document.getElementById("today").textContent =
-  new Date().toLocaleDateString("fr-FR", {weekday:"long", day:"numeric", month:"long", year:"numeric"});
-
-// ---------- Envoi par mail ----------
-function buildTable(title, rows){
-  if(!rows.length) return "";
-  let html = `<h3 style="margin:20px 0 8px;font-family:Arial,sans-serif;color:#5C3A1B;border-bottom:2px solid #8A5A2B;padding-bottom:4px">${title}</h3>`;
-  html += `<table style="border-collapse:collapse;width:100%;font-family:Arial,sans-serif;font-size:14px;margin-bottom:16px">`;
-  html += `<thead><tr style="background:#8A5A2B;color:white">`;
-  rows[0].headers.forEach(h=>{
-    html += `<th style="padding:8px 12px;text-align:left;border:1px solid #ccc">${h}</th>`;
-  });
-  html += `</tr></thead><tbody>`;
-  rows.forEach((r,i)=>{
-    const bg = i%2===0?"#F7F1E8":"#ffffff";
-    html += `<tr style="background:${bg}">`;
-    r.cells.forEach(c=>{
-      html += `<td style="padding:8px 12px;border:1px solid #ddd">${c}</td>`;
-    });
-    html += `</tr>`;
-  });
-  html += `</tbody></table>`;
-  return html;
-}
+document.getElementById("today").textContent = new Date().toLocaleDateString("fr-FR",{weekday:"long",day:"numeric",month:"long",year:"numeric"});
 
 async function sendInventory(){
-  const btn = document.querySelector(".send-btn");
+  const btn = document.getElementById("send-btn");
   btn.textContent = "Envoi en cours...";
   btn.disabled = true;
 
-  const payload = { macarons: [], patisserie: [], chocolats: [] };
+  const emailDest = document.getElementById("email-dest").value || "commandes.duchesse@gmail.com";
+  const payload = { macarons:[], patisserie:[], chocolats:[], emailTo: emailDest };
   let hasData = false;
 
-  // Macarons & Chocolats
   ["macarons","chocolats"].forEach(cat=>{
-    const inputs = document.querySelectorAll(`input[data-cat="${cat}"]`);
-    inputs.forEach(inp=>{
+    document.querySelectorAll(`input[data-cat="${cat}"]`).forEach(inp=>{
       const v = parseInt(inp.value,10);
-      if(v && v>0){
-        hasData = true;
-        payload[cat].push({nom: inp.dataset.name, quantite: v});
-      }
+      if(v>0){ hasData=true; payload[cat].push({nom:inp.dataset.name, quantite:v}); }
     });
   });
 
-  // Pâtisserie
-  const cakeInputs = document.querySelectorAll(`input[data-cat="patisserie"]`);
   const cakeMap = {};
-  cakeInputs.forEach(inp=>{
+  document.querySelectorAll(`input[data-cat="patisserie"]`).forEach(inp=>{
     const v = parseInt(inp.value,10);
-    if(v && v>0){
-      hasData = true;
-      const n = inp.dataset.name;
-      if(!cakeMap[n]) cakeMap[n]={nom:n};
-      cakeMap[n][inp.dataset.fmt] = v;
-    }
+    if(v>0){ hasData=true; if(!cakeMap[inp.dataset.name]) cakeMap[inp.dataset.name]={nom:inp.dataset.name}; cakeMap[inp.dataset.name][inp.dataset.fmt]=v; }
   });
   payload.patisserie = Object.values(cakeMap);
 
-  if(!hasData){
-    alert("Aucune quantité saisie pour le moment.");
-    btn.textContent = "Envoyer l'inventaire par mail";
-    btn.disabled = false;
-    return;
-  }
+  if(!hasData){ alert("Aucune quantité saisie."); btn.textContent="Envoyer l'inventaire par mail"; btn.disabled=false; return; }
 
-  const emailDest = document.getElementById("email-dest").value || "commandes.duchesse@gmail.com";
-  payload.emailTo = emailDest;
-  const dateStr = new Date().toLocaleDateString("fr-FR",{weekday:"long",day:"numeric",month:"long",year:"numeric"});
-  const dateShort = new Date().toLocaleDateString("fr-FR");
-  const sheetsUrl = "https://docs.google.com/spreadsheets/d/13Vz3bF-0hcdY0tWXKB1vjYBNA9nLP5uAw_T5DdJW2Sk/edit";
-
-  // Envoyer vers Google Sheets
   try {
     await fetch(SCRIPT_URL, {
-      method: "POST",
-      mode: "no-cors",
-      headers: {"Content-Type": "application/json"},
+      method:"POST", mode:"no-cors",
+      headers:{"Content-Type":"application/json"},
       body: JSON.stringify(payload)
     });
-    await new Promise(r => setTimeout(r, 1500));
-
-    // Envoyer le mail avec le lien
-    const subject = encodeURIComponent(`Inventaire du ${dateShort}`);
-    const body = encodeURIComponent(`Bonjour,
-
-L'inventaire du ${dateStr} est disponible ici :
-${sheetsUrl}
-
-Bonne soirée à toute l'équipe 🥐
-Boulangeries Joseph`);
-    window.location.href = `mailto:${emailDest}?subject=${subject}&body=${body}`;
-
+    await new Promise(r=>setTimeout(r,2000));
     btn.textContent = "✅ Inventaire envoyé !";
     btn.style.background = "#2A7A3B";
     setTimeout(()=>{
@@ -439,7 +246,7 @@ Boulangeries Joseph`);
       btn.disabled = false;
     }, 3000);
   } catch(e) {
-    alert("Erreur d'envoi. Vérifie ta connexion.");
+    alert("Erreur de connexion. Vérifie le wifi.");
     btn.textContent = "Envoyer l'inventaire par mail";
     btn.disabled = false;
   }
