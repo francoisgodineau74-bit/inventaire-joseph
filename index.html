@@ -15,6 +15,7 @@
     --blue-dark:#1A4A7A;
     --line:#C5D4E8;
     --white:#FFFFFF;
+    --separator:#3A5A8A;
   }
   *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
   html,body{margin:0;padding:0;background:var(--cream);color:var(--ink);
@@ -22,100 +23,79 @@
     -webkit-font-smoothing:antialiased;}
   body{padding-bottom:130px;}
 
-  header{
-    padding:20px 16px 14px;
-    background:var(--crust);
-    color:var(--white);
-    position:sticky;top:0;z-index:10;
-    box-shadow:0 2px 8px rgba(0,0,0,0.15);
-  }
+  header{padding:20px 16px 14px;background:var(--crust);color:#fff;
+    position:sticky;top:0;z-index:10;box-shadow:0 2px 8px rgba(0,0,0,0.15);}
   header h1{margin:0;font-size:20px;font-weight:700;}
   header .date{margin-top:2px;font-size:13px;opacity:0.8;}
 
-  nav{
-    display:flex;gap:6px;
-    padding:12px 12px 0;
-    background:var(--crust);
-  }
-  nav button{
-    flex:1;padding:11px 4px;
-    border:none;border-radius:10px 10px 0 0;
-    font-size:14px;font-weight:600;
-    background:rgba(255,255,255,0.15);
-    color:rgba(255,255,255,0.8);
-  }
+  nav{display:flex;gap:6px;padding:12px 12px 0;background:var(--crust);}
+  nav button{flex:1;padding:11px 4px;border:none;border-radius:10px 10px 0 0;
+    font-size:13px;font-weight:600;background:rgba(255,255,255,0.15);color:rgba(255,255,255,0.8);}
   nav button.active{background:var(--cream);color:var(--crust-dark);}
 
   main{padding:14px 12px 0;}
   .category{display:none;}
   .category.active{display:block;}
 
-  .row{
-    background:var(--white);
-    border:1px solid var(--line);
-    border-radius:12px;
-    padding:12px 14px;
-    margin-bottom:8px;
-    display:flex;align-items:center;justify-content:space-between;gap:10px;
-  }
+  /* Ligne simple produit + quantité */
+  .row{background:var(--white);border:1px solid var(--line);border-radius:12px;
+    padding:12px 14px;margin-bottom:8px;display:flex;align-items:center;justify-content:space-between;gap:10px;}
   .row .name{font-size:16px;font-weight:600;flex:1;}
-  .row input[type=number]{
-    width:76px;font-size:22px;font-weight:700;text-align:center;
-    padding:9px 4px;border:2px solid var(--line);border-radius:10px;
-    background:var(--cream);color:var(--ink);
-  }
+  .row input[type=number]{width:76px;font-size:22px;font-weight:700;text-align:center;
+    padding:9px 4px;border:2px solid var(--line);border-radius:10px;background:var(--cream);color:var(--ink);}
   .row input[type=number]:focus{outline:none;border-color:var(--blue);}
 
-  .cake{
-    background:var(--white);border:1px solid var(--line);
-    border-radius:12px;margin-bottom:8px;overflow:hidden;
+  /* Séparateur de rubrique */
+  .rubrique{
+    background:var(--crust);color:#fff;
+    padding:8px 14px;border-radius:10px;margin:14px 0 8px;
+    font-size:14px;font-weight:700;letter-spacing:0.5px;
+    text-transform:uppercase;
   }
-  .cake summary{
-    list-style:none;padding:13px 14px;
-    font-size:16px;font-weight:600;
-    display:flex;justify-content:space-between;align-items:center;cursor:pointer;
-  }
+
+  /* Bloc dépliable (ganaches, pralinés, divers) */
+  .choc-item{background:var(--white);border:1px solid var(--line);border-radius:12px;margin-bottom:8px;overflow:hidden;}
+  .choc-item summary{list-style:none;padding:13px 14px;font-size:16px;font-weight:600;
+    display:flex;justify-content:space-between;align-items:center;cursor:pointer;}
+  .choc-item summary::-webkit-details-marker{display:none;}
+  .choc-item summary .chev{color:var(--crust);font-size:13px;transition:transform .15s;}
+  .choc-item[open] summary .chev{transform:rotate(90deg);}
+  .choc-fields{padding:4px 14px 12px;display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+  .choc-field{background:var(--cream);border-radius:8px;padding:7px 8px;display:flex;flex-direction:column;gap:3px;}
+  .choc-field label{font-size:11px;color:var(--crust-dark);font-weight:600;}
+  .choc-field input{width:100%;font-size:18px;font-weight:700;text-align:center;
+    padding:7px 2px;border:2px solid var(--line);border-radius:7px;background:var(--white);}
+  .choc-field input:focus{outline:none;border-color:var(--blue);}
+
+  /* Pâtisserie */
+  .cake{background:var(--white);border:1px solid var(--line);border-radius:12px;margin-bottom:8px;overflow:hidden;}
+  .cake summary{list-style:none;padding:13px 14px;font-size:16px;font-weight:600;
+    display:flex;justify-content:space-between;align-items:center;cursor:pointer;}
   .cake summary::-webkit-details-marker{display:none;}
   .cake summary .chev{color:var(--crust);font-size:13px;transition:transform .15s;}
   .cake[open] summary .chev{transform:rotate(90deg);}
-  .formats{
-    padding:4px 14px 12px;
-    display:grid;grid-template-columns:1fr 1fr;gap:8px;
-  }
+  .formats{padding:4px 14px 12px;display:grid;grid-template-columns:1fr 1fr;gap:8px;}
   .fmt{background:var(--cream);border-radius:8px;padding:7px 8px;display:flex;flex-direction:column;gap:3px;}
   .fmt label{font-size:11px;color:var(--crust-dark);font-weight:600;}
-  .fmt input{
-    width:100%;font-size:18px;font-weight:700;text-align:center;
-    padding:7px 2px;border:2px solid var(--line);border-radius:7px;background:var(--white);
-  }
+  .fmt input{width:100%;font-size:18px;font-weight:700;text-align:center;
+    padding:7px 2px;border:2px solid var(--line);border-radius:7px;background:var(--white);}
   .fmt input:focus{outline:none;border-color:var(--blue);}
 
-  .add-btn{
-    display:block;width:100%;padding:13px;margin:4px 0 18px;
-    border:2px dashed var(--line);border-radius:12px;
-    background:transparent;color:var(--crust-dark);font-size:14px;font-weight:600;
-  }
+  .add-btn{display:block;width:100%;padding:13px;margin:4px 0 18px;
+    border:2px dashed var(--line);border-radius:12px;background:transparent;
+    color:var(--crust-dark);font-size:14px;font-weight:600;}
 
-  footer{
-    position:fixed;left:0;right:0;bottom:0;
+  footer{position:fixed;left:0;right:0;bottom:0;
     padding:12px 14px calc(12px + env(safe-area-inset-bottom));
-    background:linear-gradient(0deg,var(--cream) 60%,rgba(245,247,250,0));
-  }
-  .email-row{
-    display:flex;align-items:center;gap:8px;margin-bottom:8px;
-  }
+    background:linear-gradient(0deg,var(--cream) 60%,rgba(245,247,250,0));}
+  .email-row{display:flex;align-items:center;gap:8px;margin-bottom:8px;}
   .email-row label{font-size:13px;color:var(--crust-dark);font-weight:600;white-space:nowrap;}
-  .email-row input{
-    flex:1;padding:9px 11px;border:2px solid var(--line);border-radius:9px;
-    font-size:13px;background:var(--white);color:var(--ink);
-  }
-  .send-btn{
-    width:100%;padding:15px;border:none;border-radius:12px;
+  .email-row input{flex:1;padding:9px 11px;border:2px solid var(--line);border-radius:9px;
+    font-size:13px;background:var(--white);color:var(--ink);}
+  .send-btn{width:100%;padding:15px;border:none;border-radius:12px;
     background:var(--blue);color:#fff;font-size:17px;font-weight:700;
-    box-shadow:0 4px 14px rgba(46,109,164,0.35);
-  }
+    box-shadow:0 4px 14px rgba(46,109,164,0.35);}
   .send-btn:active{background:var(--blue-dark);}
-  .hint{text-align:center;font-size:12px;color:#7a8fa6;margin:3px 0 6px;}
 </style>
 </head>
 <body>
@@ -132,18 +112,22 @@
 </nav>
 
 <main>
+  <!-- MACARONS -->
   <section class="category active" id="macarons">
     <div id="list-macarons"></div>
     <button class="add-btn" onclick="addSimple('macarons')">+ Ajouter un produit</button>
   </section>
+
+  <!-- PATISSERIE -->
   <section class="category" id="patisserie">
-    <div class="hint">Touchez un gâteau pour saisir les formats</div>
     <div id="list-patisserie"></div>
     <button class="add-btn" onclick="addCake()">+ Ajouter un produit</button>
   </section>
+
+  <!-- CHOCOLATS -->
   <section class="category" id="chocolats">
     <div id="list-chocolats"></div>
-    <button class="add-btn" onclick="addSimple('chocolats')">+ Ajouter un produit</button>
+    <button class="add-btn" onclick="addChocolat()">+ Ajouter un produit</button>
   </section>
 </main>
 
@@ -158,39 +142,113 @@
 <script>
 const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzpYVzKn-CKes9RWJ0OZdErxE6Si3hbaRtXVUPXW6IUseGDmvBdmogV5dCBl5MYRnW2Ug/exec";
 
-const DATA = {
-  macarons: ["Chocolat","Café","Caramel","Vanille","Pistache","Plantagenet","Framboise","Fraise","Citron","Fruit des bois","Absinthe","Champigny","Réglisse","Pomme Tatin"],
-  chocolats: [],
-  patisserie: ["Concerto","Caramélia","3 Chocolat","Echiquier","Sultan","Carmin","Tarte exotique","Tarte citron","Armoricain","Pavé pistache","Eclair café","Eclair chocolat"]
-};
-const FORMATS = ["indiv","4p","6p","8p","10p","12p"];
-const FORMAT_LABELS = {indiv:"Individuel","4p":"4 parts","6p":"6 parts","8p":"8 parts","10p":"10 parts","12p":"12 parts"};
+const MACARONS = ["Chocolat","Café","Caramel","Vanille","Pistache","Plantagenet","Framboise","Fraise","Citron","Fruit des bois","Absinthe","Champigny","Réglisse","Pomme Tatin"];
 
-function renderSimple(cat){
-  const c = document.getElementById("list-"+cat);
+const PATISSERIE = ["Concerto","Caramélia","3 Chocolat","Echiquier","Sultan","Carmin","Tarte exotique","Tarte citron","Armoricain","Pavé pistache","Eclair café","Eclair chocolat"];
+const PAT_FORMATS = ["indiv","4p","6p","8p","10p","12p"];
+const PAT_LABELS = {indiv:"Individuel","4p":"4 parts","6p":"6 parts","8p":"8 parts","10p":"10 parts","12p":"12 parts"};
+
+// Chocolats : structure par rubrique
+const CHOCOLATS = {
+  ganaches: {
+    label: "GANACHES",
+    champs: ["Noir — Petite boîte","Noir — Grande boîte","Lait — Petite boîte","Lait — Grande boîte"],
+    produits: ["Ganache Clisson","Tanzanie","Ghana","Perlia","Palet or","Courbette","Combier","Tonka","Poivre","Perles Anjou","Perles muscadet","Sésame","Cannelle","Anis","Pistache","Passion","Framboise","Thé Framboise","Miel","Thé Earl","Thé Menthe","Cassis","Marguerite"]
+  },
+  pralines: {
+    label: "PRALINÉS",
+    champs: ["Noir — Petite boîte","Noir — Grande boîte","Lait — Petite boîte","Lait — Grande boîte"],
+    produits: ["Saumur Praliné","Feuilletine","Couscher","Moelleux","Epices","Arpège","Tuffeaux"]
+  },
+  divers: {
+    label: "DIVERS",
+    champs: ["Noir","Lait","Blanc"],
+    produits: ["Citronette","Orangette","Orange tranche","Champignons praliné","Mendiants","Roses des sables"]
+  },
+  tablettes: {
+    label: "TABLETTES",
+    champs: ["Quantité"],
+    produits: ["Tanzania","Mexique","St Domingue","Sao Tomé","Saumur Lait","Saumur Blanc","Saumur Noir","Saumur Rosé","Saumur Caramel","Noisette Noir","Noisette Lait","Noir Orange","Lait Citron","Zephyr Caramel","Crispy Noir","Crispy Lait","Zephyr 34%","Ghana tablette","Vietnam","Amandes Lait","Amandes Noir","Venezuela","Matsiro 70%","Fruit sec Noir","Fruit sec Lait","Mendiant Blanc","Equateur Lait 39%"]
+  },
+  crottins: {
+    label: "CROTTINS",
+    champs: ["Sachet","Quantité"],
+    produits: ["100g","200g","300g","400g"]
+  }
+};
+
+// ── RENDU MACARONS ──
+function renderMacarons(){
+  const c = document.getElementById("list-macarons");
   c.innerHTML = "";
-  DATA[cat].forEach(name=>{
+  MACARONS.forEach(name=>{
     const d = document.createElement("div");
     d.className = "row";
-    d.innerHTML = `<div class="name">${name}</div><input type="number" inputmode="numeric" min="0" placeholder="0" data-cat="${cat}" data-name="${name}">`;
+    d.innerHTML = `<div class="name">${name}</div><input type="number" inputmode="numeric" min="0" placeholder="0" data-cat="macarons" data-name="${name}">`;
     c.appendChild(d);
   });
 }
 
+// ── RENDU PÂTISSERIE ──
 function renderPatisserie(){
   const c = document.getElementById("list-patisserie");
   c.innerHTML = "";
-  DATA.patisserie.forEach(name=>{
+  PATISSERIE.forEach(name=>{
     const det = document.createElement("details");
     det.className = "cake";
-    det.innerHTML = `<summary>${name} <span class="chev">▶</span></summary><div class="formats">${FORMATS.map(f=>`<div class="fmt"><label>${FORMAT_LABELS[f]}</label><input type="number" inputmode="numeric" min="0" placeholder="0" data-cat="patisserie" data-name="${name}" data-fmt="${f}"></div>`).join("")}</div>`;
+    det.innerHTML = `<summary>${name} <span class="chev">▶</span></summary><div class="formats">${PAT_FORMATS.map(f=>`<div class="fmt"><label>${PAT_LABELS[f]}</label><input type="number" inputmode="numeric" min="0" placeholder="0" data-cat="patisserie" data-name="${name}" data-fmt="${f}"></div>`).join("")}</div>`;
     c.appendChild(det);
   });
 }
 
-function renderAll(){ renderSimple("macarons"); renderSimple("chocolats"); renderPatisserie(); }
+// ── RENDU CHOCOLATS ──
+function renderChocolats(){
+  const c = document.getElementById("list-chocolats");
+  c.innerHTML = "";
+  Object.entries(CHOCOLATS).forEach(([rubKey, rub])=>{
+    // Titre de rubrique
+    const titre = document.createElement("div");
+    titre.className = "rubrique";
+    titre.textContent = rub.label;
+    c.appendChild(titre);
+
+    // Pour crottins : affichage simple (ligne par format)
+    if(rubKey === "crottins"){
+      rub.produits.forEach(format=>{
+        const d = document.createElement("div");
+        d.className = "row";
+        d.innerHTML = `<div class="name">Crottin ${format}</div><input type="number" inputmode="numeric" min="0" placeholder="0" data-cat="chocolats" data-rubrique="crottins" data-name="Crottin ${format}">`;
+        c.appendChild(d);
+      });
+      return;
+    }
+
+    // Pour tablettes : affichage simple
+    if(rubKey === "tablettes"){
+      rub.produits.forEach(name=>{
+        const d = document.createElement("div");
+        d.className = "row";
+        d.innerHTML = `<div class="name">${name}</div><input type="number" inputmode="numeric" min="0" placeholder="0" data-cat="chocolats" data-rubrique="tablettes" data-name="${name}">`;
+        c.appendChild(d);
+      });
+      return;
+    }
+
+    // Pour ganaches, pralinés, divers : bloc dépliable avec champs
+    rub.produits.forEach(name=>{
+      const det = document.createElement("details");
+      det.className = "choc-item";
+      const champs = rub.champs.map(champ=>`<div class="choc-field"><label>${champ}</label><input type="number" inputmode="numeric" min="0" placeholder="0" data-cat="chocolats" data-rubrique="${rubKey}" data-name="${name}" data-champ="${champ}"></div>`).join("");
+      det.innerHTML = `<summary>${name} <span class="chev">▶</span></summary><div class="choc-fields">${champs}</div>`;
+      c.appendChild(det);
+    });
+  });
+}
+
+function renderAll(){ renderMacarons(); renderPatisserie(); renderChocolats(); }
 renderAll();
 
+// ── ONGLETS ──
 document.querySelectorAll(".tab").forEach(btn=>{
   btn.addEventListener("click",()=>{
     document.querySelectorAll(".tab").forEach(b=>b.classList.remove("active"));
@@ -200,11 +258,13 @@ document.querySelectorAll(".tab").forEach(btn=>{
   });
 });
 
-function addSimple(cat){ const n=prompt("Nom du produit :"); if(n&&n.trim()){DATA[cat].push(n.trim());renderSimple(cat);} }
-function addCake(){ const n=prompt("Nom du gâteau :"); if(n&&n.trim()){DATA.patisserie.push(n.trim());renderPatisserie();} }
+function addSimple(cat){ const n=prompt("Nom du produit :"); if(n&&n.trim()){MACARONS.push(n.trim());renderMacarons();} }
+function addCake(){ const n=prompt("Nom du gâteau :"); if(n&&n.trim()){PATISSERIE.push(n.trim());renderPatisserie();} }
+function addChocolat(){ const n=prompt("Nom du produit :"); if(n&&n.trim()){CHOCOLATS.tablettes.produits.push(n.trim());renderChocolats();} }
 
 document.getElementById("today").textContent = new Date().toLocaleDateString("fr-FR",{weekday:"long",day:"numeric",month:"long",year:"numeric"});
 
+// ── ENVOI ──
 async function sendInventory(){
   const btn = document.getElementById("send-btn");
   btn.textContent = "Envoi en cours...";
@@ -214,19 +274,33 @@ async function sendInventory(){
   const payload = { macarons:[], patisserie:[], chocolats:[], emailTo: emailDest };
   let hasData = false;
 
-  ["macarons","chocolats"].forEach(cat=>{
-    document.querySelectorAll(`input[data-cat="${cat}"]`).forEach(inp=>{
-      const v = parseInt(inp.value,10);
-      if(v>0){ hasData=true; payload[cat].push({nom:inp.dataset.name, quantite:v}); }
-    });
+  // Macarons
+  document.querySelectorAll(`input[data-cat="macarons"]`).forEach(inp=>{
+    const v = parseInt(inp.value,10);
+    if(v>0){ hasData=true; payload.macarons.push({nom:inp.dataset.name, quantite:v}); }
   });
 
+  // Pâtisserie
   const cakeMap = {};
   document.querySelectorAll(`input[data-cat="patisserie"]`).forEach(inp=>{
     const v = parseInt(inp.value,10);
     if(v>0){ hasData=true; if(!cakeMap[inp.dataset.name]) cakeMap[inp.dataset.name]={nom:inp.dataset.name}; cakeMap[inp.dataset.name][inp.dataset.fmt]=v; }
   });
   payload.patisserie = Object.values(cakeMap);
+
+  // Chocolats
+  const chocMap = {};
+  document.querySelectorAll(`input[data-cat="chocolats"]`).forEach(inp=>{
+    const v = parseInt(inp.value,10);
+    if(v>0){
+      hasData=true;
+      const key = inp.dataset.rubrique + "||" + inp.dataset.name;
+      if(!chocMap[key]) chocMap[key] = {rubrique:inp.dataset.rubrique, nom:inp.dataset.name, champs:{}};
+      if(inp.dataset.champ) chocMap[key].champs[inp.dataset.champ] = v;
+      else chocMap[key].champs["quantite"] = v;
+    }
+  });
+  payload.chocolats = Object.values(chocMap);
 
   if(!hasData){ alert("Aucune quantité saisie."); btn.textContent="Envoyer l'inventaire par mail"; btn.disabled=false; return; }
 
